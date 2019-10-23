@@ -1,16 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class MergeSort implements SortingAlgorithm
 {
     @Override
     public double[] sort(double[] unsortedVector) {
-        double[] sortedVector = new double[unsortedVector.length];
 
         int left = 0;
-        int right = unsortedVector.length;
-        int middle = (left + right)/2;
+        int right = unsortedVector.length - 1;
 
-        merge(unsortedVector, left, middle, right);
+        divide(unsortedVector, left, right);
 
         return unsortedVector;
     }
@@ -31,20 +31,21 @@ public class MergeSort implements SortingAlgorithm
 
     public void merge(double v[], int left, int middle, int right){
         int i = left;
+        int l = left;
         int j = middle+1;
-        ArrayList<Double> tmp = new ArrayList();
+        HashMap<Integer,Double> tmp = new HashMap<>();
 
-        for (; i <= right; i++) {
-            tmp.add(i,v[i]);
+        for (; l <= right; l++) {
+            tmp.put(l,v[l]);
         }
 
         for (int k = left; k <= right; k++) {
             if(i <= middle) {
                 if(j <= right) {
-                    if (tmp.get(i) < tmp.get(j)) {
-                        v[k] = tmp.get(i++);
-                    } else {
+                    if (tmp.get(j) < tmp.get(i)) {
                         v[k] = tmp.get(j++);
+                    } else {
+                        v[k] = tmp.get(i++);
                     }
                 }
                 else {

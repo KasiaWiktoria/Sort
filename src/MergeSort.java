@@ -1,18 +1,19 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class MergeSort implements SortingAlgorithm
 {
     @Override
     public double[] sort(double[] unsortedVector) {
 
+        double[] sortedVector = new double[unsortedVector.length];
+        for(int i = 0; i< unsortedVector.length; i++){
+            sortedVector[i] = unsortedVector[i];
+        }
+
         int left = 0;
-        int right = unsortedVector.length - 1;
+        int right = sortedVector.length - 1;
 
-        divide(unsortedVector, left, right);
-
-        return unsortedVector;
+        divide(sortedVector, left, right);
+        return sortedVector;
     }
 
     public void divide(double v[], int left, int right){
@@ -20,7 +21,6 @@ public class MergeSort implements SortingAlgorithm
         if(right <= left){
             return;
         }
-
         int middle = (left + right)/2;
 
         divide(v, left, middle);
@@ -33,27 +33,28 @@ public class MergeSort implements SortingAlgorithm
         int i = left;
         int l = left;
         int j = middle+1;
-        HashMap<Integer,Double> tmp = new HashMap<>();
-
-        for (; l <= right; l++) {
-            tmp.put(l,v[l]);
-        }
-
+        double[] tmp = new double[right-left+1];
+        int p = 0;
         for (int k = left; k <= right; k++) {
             if(i <= middle) {
                 if(j <= right) {
-                    if (tmp.get(j) < tmp.get(i)) {
-                        v[k] = tmp.get(j++);
+                    if (v[j] < v[i]) {
+                        tmp[p++] = v[j++];
                     } else {
-                        v[k] = tmp.get(i++);
+                        tmp[p++] = v[i++];
                     }
                 }
                 else {
-                    v[k] = tmp.get(i++);
+                    tmp[p++] = v[i++];
                 }
             }else {
-                v[k] = tmp.get(j++);
+                tmp[p++] = v[j++];
             }
+        }
+
+        p = 0;
+        for(int w=left; w<=right; w++){
+            v[w] = tmp[p++];
         }
     }
 }

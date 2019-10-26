@@ -1,4 +1,3 @@
-
 public class MergeSort implements SortingAlgorithm
 {
     @Override

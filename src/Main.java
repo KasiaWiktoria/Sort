@@ -19,23 +19,35 @@ public class Main {
         printVector(MsortedVector);
         printVector(reverseVector);
 
-        System.out.println("Test dla losowych danych: ");
-        System.out.println("Test InsertSort: ");
-        insertSortTest(unsortedVector);
-        System.out.println("Test MergeSort: ");
-        mergeSortTest(unsortedVector);
+//        System.out.println("Test dla losowych danych: ");
+//        System.out.println("Test InsertSort: ");
+//        insertSortTest(unsortedVector);
+//        System.out.println("Test MergeSort: ");
+//        mergeSortTest(unsortedVector);
 
         System.out.println("Test dla optymistycznych danych: ");
         System.out.println("Test InsertSort: ");
-        insertSortTest(IsortedVector);
+        for (int i = 0; i < 100000; i+=1000) {
+            double[] optV = sortedRandomVector(i);
+            insertSortTest(optV);
+        }
         System.out.println("Test MergeSort: ");
-        mergeSortTest(MsortedVector);
+        for (int i = 0; i < 100000; i+=1000) {
+            double[] optV = sortedRandomVector(i);
+            mergeSortTest(optV);
+        }
 
         System.out.println("Test dla pesymistycznych danych: ");
         System.out.println("Test InsertSort: ");
-        insertSortTest(reverseVector);
+        for (int i = 0; i < 100000; i+=1000) {
+            double[] pesV = reverse(sortedRandomVector(i));
+            insertSortTest(pesV);
+        }
         System.out.println("Test MergeSort: ");
-        mergeSortTest(reverseVector);
+        for (int i = 0; i < 100000; i+=1000) {
+            double[] pesV = reverse(sortedRandomVector(i));
+            mergeSortTest(pesV);
+        }
     }
 
     public static double[] randomVector(int n){
@@ -46,6 +58,18 @@ public class Main {
             v[i] = generator.nextDouble();
         }
         return v;
+    }
+
+    public static double[] sortedRandomVector(int n){
+        double v[] = new double[n];
+        Random generator = new Random();
+
+        for (int i=0; i<n; i++){
+            v[i] = generator.nextDouble();
+        }
+        MergeSort ms = new MergeSort();
+        double[] sv = ms.sort(v);
+        return sv;
     }
 
     public static void printVector(double[] v){
